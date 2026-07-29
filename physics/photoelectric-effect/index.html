@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Photoelectric Effect — Interactive Simulator</title>
+<meta name="description" content="An interactive simulation of the photoelectric effect: adjust light frequency and intensity and watch electron emission respond in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="pe-app">
+  <div class="pe-inner">
+
+    <div class="pe-eyebrow">1905 · Einstein's Insight</div>
+    <h1 class="pe-title">The Photoelectric Effect</h1>
+    <p class="pe-subtitle">
+      Light hits a metal plate. Sometimes electrons fly off, sometimes not — and it isn't
+      about how bright the light is. Adjust the frequency and intensity below and watch what
+      actually decides the outcome.
+    </p>
+
+    <!-- ===================== SIMULATION PANEL ===================== -->
+    <section class="pe-panel" aria-label="Simulation">
+      <div id="peTubeWrap" class="pe-tube-wrap">
+        <canvas id="peCanvas"></canvas>
+        <span class="pe-tube-label" style="left:10px; top:8px;">light source</span>
+        <span id="pePlateLabel" class="pe-tube-label" style="right:10px; top:8px;">Sodium plate</span>
+      </div>
+
+      <div class="pe-metal-row" id="peMetalRow" role="group" aria-label="Select metal">
+        <!-- buttons injected by script.js -->
+      </div>
+
+      <div class="pe-control">
+        <div class="pe-control-head">
+          <label for="peFrequency">Frequency</label>
+          <span class="pe-control-val"><span id="peFreqVal">560</span> THz</span>
+        </div>
+        <div class="pe-slider-wrap">
+          <div id="peThreshMark" class="pe-thresh-mark"></div>
+          <span id="peThreshLabel" class="pe-thresh-label">f₀</span>
+          <input type="range" id="peFrequency" class="pe-slider"
+                 min="300" max="1600" step="1" value="560"
+                 aria-describedby="peFreqVal">
+        </div>
+      </div>
+
+      <div class="pe-control">
+        <div class="pe-control-head">
+          <label for="peIntensity">Intensity</label>
+          <span class="pe-control-val"><span id="peIntensityVal">55</span>%</span>
+        </div>
+        <div class="pe-slider-wrap">
+          <input type="range" id="peIntensity" class="pe-slider"
+                 min="0" max="100" step="1" value="55"
+                 aria-describedby="peIntensityVal">
+        </div>
+      </div>
+
+      <div class="pe-stats">
+        <div class="pe-stat">
+          <div class="pe-stat-label">Photon Energy</div>
+          <div class="pe-stat-val" id="peStatEnergy">2.32 eV</div>
+        </div>
+        <div class="pe-stat">
+          <div class="pe-stat-label">Work Function (<span id="peStatMetalSym">Na</span>)</div>
+          <div class="pe-stat-val" id="peStatWork" style="color:#9AA1AF;">2.30 eV</div>
+        </div>
+        <div class="pe-stat">
+          <div class="pe-stat-label">Max Electron KE</div>
+          <div class="pe-stat-val" id="peStatKE">0.02 eV</div>
+        </div>
+        <div class="pe-stat">
+          <div class="pe-stat-label">Electron Rate</div>
+          <div class="pe-stat-val" id="peStatRate">0/s</div>
+        </div>
+        <div class="pe-status">
+          <span id="peStatusDot" class="pe-dot"></span>
+          <span id="peStatusText" class="pe-status-text">NO EMISSION — below threshold</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GRAPH PANEL ===================== -->
+    <section class="pe-panel" aria-label="Kinetic energy versus frequency graph">
+      <div class="pe-graph-title">Max Kinetic Energy vs. Frequency</div>
+      <svg id="peGraph" viewBox="0 0 320 150" class="pe-graph-svg">
+        <line x1="34" y1="126" x2="310" y2="126" stroke="#232830" stroke-width="1"></line>
+        <line x1="34" y1="10" x2="34" y2="126" stroke="#232830" stroke-width="1"></line>
+        <text x="34" y="140" font-size="8" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="middle" id="peTickF1">500</text>
+        <text x="0" y="0" font-size="8" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="middle" id="peTickF2">1000</text>
+        <text x="0" y="0" font-size="8" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="middle" id="peTickF3">1500</text>
+        <text x="28" y="0" font-size="8" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="end" id="peTickK0">0</text>
+        <text x="28" y="0" font-size="8" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="end" id="peTickK1">2.5</text>
+        <text x="28" y="0" font-size="8" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="end" id="peTickK2">5</text>
+        <line id="peThreshLine" x1="0" y1="10" x2="0" y2="126" stroke="#E8584A" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"></line>
+        <line id="peKELine" x1="0" y1="0" x2="0" y2="0" stroke="#FFB300" stroke-width="2"></line>
+        <circle id="peKEDot" cx="0" cy="0" r="4.5" fill="#E8584A" stroke="#0B0E11" stroke-width="1.5"></circle>
+        <text x="172" y="149" font-size="8.5" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="middle">frequency (THz)</text>
+        <text x="10" y="70" font-size="8.5" fill="#6F7684" font-family="IBM Plex Mono, monospace" text-anchor="middle" transform="rotate(-90 10 70)">KE (eV)</text>
+      </svg>
+      <p class="pe-caption">
+        The line's slope is Planck's constant, h — the same for every metal. Only its
+        starting point (the work function) shifts. That line never bends with intensity,
+        because intensity isn't in the equation.
+      </p>
+    </section>
+
+    <p class="pe-note">
+      <b>Why this was strange in 1905:</b> light was understood as a wave, so a brighter wave
+      should always shake loose more energetic electrons. Instead, dim high-frequency light
+      ejected electrons instantly, while intense low-frequency light did nothing at all. Einstein's
+      explanation — that light arrives in discrete packets, each with energy E = hf — helped
+      establish that light behaves as both particle and wave, and won him the 1921 Nobel Prize.
+    </p>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
