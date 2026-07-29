@@ -1,10 +1,13 @@
 /* ============================================================
-   Photoelectric Effect Simulator — Stylesheet
-   Design tokens
-   Colors: bg #0B0E11, panel #12161B, text #ECE7D8, muted #9AA1AF,
-           amber #FFB300, cyan #4FD8E8, red #E8584A, green #6FCF8F
-   Type:   display/body  -> 'Source Serif 4'
-           technical/data -> 'IBM Plex Mono'
+   Eureka Simulations — Homepage Stylesheet
+   Shares the base palette/type with the simulation pages so the
+   whole site feels like one product:
+     bg #0B0E11 · panel #12161B · text #ECE7D8 · muted #9AA1AF
+     mono: 'IBM Plex Mono'   serif: 'Source Serif 4'
+   Subject accent colors (used consistently per subject):
+     physics   -> amber  #FFB300
+     chemistry -> green  #6FCF8F
+     biology   -> rose   #F2789F
    ============================================================ */
 
 * { box-sizing: border-box; }
@@ -15,313 +18,218 @@ html, body {
   background: #0B0E11;
 }
 
-.pe-app {
+.eu-app {
   background: #0B0E11;
   color: #ECE7D8;
   font-family: 'Source Serif 4', Georgia, serif;
-  padding: 22px 16px 34px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  padding: 40px 16px 60px;
 }
 
-.pe-inner {
+.eu-inner {
   width: 100%;
-  max-width: 620px;
+  max-width: 900px;
 }
 
-.pe-eyebrow {
+/* ---------- Hero ---------- */
+
+.eu-hero {
+  margin-bottom: 26px;
+}
+
+.eu-eyebrow {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
   color: #FFB300;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.pe-title {
-  font-size: 26px;
+.eu-title {
+  font-size: 38px;
   font-weight: 600;
-  margin: 0 0 6px;
   letter-spacing: -0.01em;
+  margin: 0 0 10px;
 }
 
-.pe-subtitle {
+.eu-subtitle {
   color: #9AA1AF;
-  font-size: 14.5px;
-  line-height: 1.5;
-  margin: 0 0 20px;
-  max-width: 46em;
+  font-size: 15.5px;
+  line-height: 1.55;
+  max-width: 40em;
+  margin: 0;
 }
 
-.pe-panel {
-  background: #12161B;
-  border: 1px solid #232830;
-  border-radius: 10px;
-  padding: 14px;
-  margin-bottom: 14px;
-}
+/* ---------- Subject tabs ---------- */
 
-/* ---------- Simulation tube ---------- */
-
-.pe-tube-wrap {
-  position: relative;
-  height: 190px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #07090B;
-  border: 1px solid #1C2127;
-}
-
-#peCanvas {
-  display: block;
-}
-
-.pe-tube-label {
-  position: absolute;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: #6F7684;
-  text-transform: uppercase;
-  pointer-events: none;
-}
-
-/* ---------- Metal selector ---------- */
-
-.pe-metal-row {
+.eu-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 14px 0 6px;
+  margin: 28px 0 30px;
+  border-bottom: 1px solid #1E232A;
+  padding-bottom: 18px;
 }
 
-.pe-metal-btn {
+.eu-tab {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12.5px;
-  background: #12161B;
+  background: transparent;
   border: 1px solid #262C34;
   color: #9AA1AF;
-  padding: 7px 12px;
+  padding: 7px 14px;
   border-radius: 20px;
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
-.pe-metal-btn:hover {
+.eu-tab:hover {
   border-color: #3A4250;
   color: #ECE7D8;
 }
 
-.pe-metal-btn.active {
-  background: rgba(255, 179, 0, 0.10);
-  border-color: #FFB300;
-  color: #FFB300;
+.eu-tab.active {
+  background: rgba(79, 216, 232, 0.10);
+  border-color: #4FD8E8;
+  color: #4FD8E8;
 }
 
-.pe-metal-btn:focus-visible,
-.pe-slider:focus-visible {
+.eu-tab:focus-visible {
   outline: 2px solid #4FD8E8;
   outline-offset: 2px;
 }
 
-/* ---------- Sliders ---------- */
+/* ---------- Subject sections ---------- */
 
-.pe-control {
-  margin: 18px 0 6px;
+.eu-section {
+  margin-bottom: 34px;
 }
 
-.pe-control-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11.5px;
-  color: #9AA1AF;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
+.eu-section.eu-hidden {
+  display: none;
 }
 
-.pe-control-val {
-  color: #ECE7D8;
-  font-size: 12.5px;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.pe-slider-wrap {
-  position: relative;
-  padding-top: 10px;
-}
-
-.pe-thresh-mark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 8px;
-  border-left: 1.5px dashed #E8584A;
-  transform: translateX(-0.5px);
-}
-
-.pe-thresh-label {
-  position: absolute;
-  top: -13px;
-  left: 0;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
-  color: #E8584A;
-  transform: translateX(-50%);
-  white-space: nowrap;
-}
-
-input[type="range"].pe-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--track-bg, #1E232A);
-  outline: none;
-  margin: 0;
-}
-
-input[type="range"].pe-slider::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 3px;
-  background: var(--track-bg, #1E232A);
-}
-
-input[type="range"].pe-slider::-moz-range-track {
-  height: 6px;
-  border-radius: 3px;
-  background: var(--track-bg, #1E232A);
-}
-
-input[type="range"].pe-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background: var(--thumb-color, #ECE7D8);
-  border: 2px solid #0B0E11;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 10px var(--thumb-glow, transparent);
-  margin-top: -5.5px;
-  cursor: pointer;
-}
-
-input[type="range"].pe-slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: var(--thumb-color, #ECE7D8);
-  border: 2px solid #0B0E11;
-  cursor: pointer;
-}
-
-/* ---------- Stat readout ---------- */
-
-.pe-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.pe-stat {
-  background: #0D1013;
-  border: 1px solid #1E232A;
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-.pe-stat-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: #6F7684;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 5px;
-}
-
-.pe-stat-val {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 19px;
-  font-weight: 500;
-  color: #ECE7D8;
-}
-
-.pe-status {
-  grid-column: span 2;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  background: #0D1013;
-  border: 1px solid #1E232A;
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-.pe-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: #E8584A;
-}
-
-.pe-status-text {
+.eu-section-title {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 13px;
-  letter-spacing: 0.06em;
-  color: #E8584A;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 14px;
+  padding-left: 10px;
+  border-left: 2px solid currentColor;
 }
 
-/* ---------- Graph ---------- */
+.eu-accent-physics   { color: #FFB300; }
+.eu-accent-chemistry { color: #6FCF8F; }
+.eu-accent-biology   { color: #F2789F; }
 
-.pe-graph-title {
+/* ---------- Card grid ---------- */
+
+.eu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.eu-card {
+  display: block;
+  background: #12161B;
+  border: 1px solid #232830;
+  border-radius: 10px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.eu-card.is-live:hover {
+  border-color: #3A4250;
+  transform: translateY(-2px);
+}
+
+.eu-card.is-live:focus-visible {
+  outline: 2px solid #4FD8E8;
+  outline-offset: 2px;
+}
+
+.eu-card.is-soon {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.eu-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.eu-tag {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: #9AA1AF;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 8px;
 }
 
-.pe-graph-svg {
-  width: 100%;
-  height: auto;
-  display: block;
+.eu-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 10px;
 }
 
-.pe-caption {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: #9AA1AF;
-  margin: 4px 0 0;
+.eu-status.is-live {
+  color: #6FCF8F;
+  background: rgba(111, 207, 143, 0.12);
 }
 
-.pe-note {
-  font-size: 14px;
-  line-height: 1.65;
-  color: #C7C2B0;
-  margin: 0;
+.eu-status.is-soon {
+  color: #6F7684;
+  background: rgba(111, 118, 132, 0.12);
 }
 
-.pe-note b {
+.eu-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 6px;
   color: #ECE7D8;
 }
 
-/* ---------- Accessibility / motion ---------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .pe-metal-btn {
-    transition: none;
-  }
+.eu-card-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #9AA1AF;
+  margin: 0 0 12px;
 }
 
-@media (max-width: 380px) {
-  .pe-title { font-size: 22px; }
-  .pe-stat-val { font-size: 17px; }
+.eu-card-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: #4FD8E8;
+}
+
+/* ---------- Footer ---------- */
+
+.eu-footer {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid #1E232A;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: #4B515C;
+}
+
+/* ---------- Responsive / accessibility ---------- */
+
+@media (max-width: 420px) {
+  .eu-title { font-size: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eu-card { transition: none; }
 }
