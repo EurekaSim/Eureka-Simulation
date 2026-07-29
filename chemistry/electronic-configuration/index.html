@@ -24,8 +24,11 @@
             <h3>Atomic Parameters</h3>
             
             <div class="control-group">
-                <label for="atomicNumberSlider">Atomic Number (Z): <span id="zValue">1</span></label>
-                <input type="range" id="atomicNumberSlider" min="1" max="18" value="1">
+                <label for="atomicNumberInput">Atomic Number (Z):</label>
+                <div class="input-row">
+                    <input type="range" id="atomicNumberSlider" min="1" max="118" value="1">
+                    <input type="number" id="atomicNumberInput" min="1" max="118" value="1">
+                </div>
             </div>
 
             <div class="element-info">
@@ -34,7 +37,7 @@
             </div>
 
             <div class="readout-panel">
-                <h3>Outer Electron Quantum Numbers</h3>
+                <h3>Differentiating Electron Quantum Numbers</h3>
                 <div class="quantum-grid">
                     <div class="q-box">
                         <span class="q-label">Principal (n)</span>
@@ -55,7 +58,7 @@
                 </div>
 
                 <div class="readout-item config-item">
-                    <span>Aufbau Configuration</span>
+                    <span>Ground State Configuration</span>
                     <span class="value chem-val" id="configReadout">1s¹</span>
                 </div>
             </div>
@@ -64,5 +67,4 @@
     
     <script src="script.js"></script>
 </body>
-  </html>
-
+</html>
