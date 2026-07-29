@@ -4,44 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eureka Simulations</title>
-    <!-- Modern sans-serif font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/main.css">
 </head>
 <body>
     <header class="hero">
         <h1>Eureka Simulations</h1>
-        <p>Interactive virtual labs for Physics, Chemistry, and Biology.</p>
     </header>
 
     <main class="container">
+        <!-- Interactive filtering logic (No JavaScript required) -->
+        <input type="radio" id="filter-all" name="category" checked>
+        <input type="radio" id="filter-biology" name="category">
+        <input type="radio" id="filter-chemistry" name="category">
+        <input type="radio" id="filter-physics" name="category">
+
+        <!-- Section Navigation Tabs -->
+        <nav class="filters">
+            <label for="filter-all">All</label>
+            <label for="filter-biology">Biology</label>
+            <label for="filter-chemistry">Chemistry</label>
+            <label for="filter-physics">Physics</label>
+        </nav>
+
+        <!-- Simulation Cards -->
         <div class="grid">
-            <!-- Physics Card (Active link to your Photoelectric effect simulator) -->
+            
+            <!-- Physics -->
             <a href="physics/photoelectric-effect/index.html" class="card physics-card">
-                <div class="card-tag">Physics</div>
-                <h2>Photoelectric Effect</h2>
-                <p>Explore the emission of electrons when light hits a material in this interactive simulation.</p>
+                <div class="card-content">
+                    <div class="card-tag">Physics</div>
+                    <h2>Photoelectric Effect</h2>
+                </div>
             </a>
 
-            <!-- Chemistry Card (Placeholder for future) -->
+            <!-- Chemistry -->
             <a href="#" class="card chemistry-card">
-                <div class="card-tag">Chemistry</div>
-                <h2>Future Simulation</h2>
-                <p>New chemistry experiments and molecular visualizations will be uploaded here.</p>
+                <div class="card-content">
+                    <div class="card-tag">Chemistry</div>
+                    <h2>Molecular Bonding</h2>
+                </div>
             </a>
 
-            <!-- Biology Card (Placeholder for future) -->
+            <!-- Biology -->
             <a href="#" class="card biology-card">
-                <div class="card-tag">Biology</div>
-                <h2>Future Simulation</h2>
-                <p>New biological processes and cellular mechanism models will be uploaded here.</p>
+                <div class="card-content">
+                    <div class="card-tag">Biology</div>
+                    <h2>Cell Division</h2>
+                </div>
             </a>
+
         </div>
     </main>
-
-    <footer>
-        <p>Built for first-principles learning.</p>
-    </footer>
 </body>
 </html>
-
