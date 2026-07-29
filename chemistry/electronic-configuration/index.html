@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Electronic Configuration - Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-bar">
+        <a href="../../index.html" class="back-link">← Back to Eureka</a>
+        <div class="sim-title">Electronic Configuration</div>
+    </nav>
+
+    <div class="sim-container">
+        <!-- Live Atom Image Canvas -->
+        <div class="canvas-wrapper">
+            <canvas id="orbitalCanvas"></canvas>
+        </div>
+
+        <!-- Interactive Control Panel -->
+        <div class="control-panel">
+            <h3>Atomic Parameters</h3>
+            
+            <div class="control-group">
+                <label for="atomicNumberSlider">Atomic Number (Z): <span id="zValue">1</span></label>
+                <input type="range" id="atomicNumberSlider" min="1" max="18" value="1">
+            </div>
+
+            <div class="element-info">
+                <div class="element-symbol" id="elementSymbol">H</div>
+                <div class="element-name" id="elementName">Hydrogen</div>
+            </div>
+
+            <div class="readout-panel">
+                <h3>Outer Electron Quantum Numbers</h3>
+                <div class="quantum-grid">
+                    <div class="q-box">
+                        <span class="q-label">Principal (n)</span>
+                        <span class="q-val" id="qN">1</span>
+                    </div>
+                    <div class="q-box">
+                        <span class="q-label">Azimuthal (l)</span>
+                        <span class="q-val" id="qL">0</span>
+                    </div>
+                    <div class="q-box">
+                        <span class="q-label">Magnetic (m_l)</span>
+                        <span class="q-val" id="qMl">0</span>
+                    </div>
+                    <div class="q-box">
+                        <span class="q-label">Spin (m_s)</span>
+                        <span class="q-val" id="qMs">+½</span>
+                    </div>
+                </div>
+
+                <div class="readout-item config-item">
+                    <span>Aufbau Configuration</span>
+                    <span class="value chem-val" id="configReadout">1s¹</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+  </html>
+
