@@ -1,0 +1,117 @@
+/* --- Base Setup --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a; /* Deep charcoal dark mode background */
+    color: #f8fafc;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Typography & Layout --- */
+.hero {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.05rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    color: #94a3b8;
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.container {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+}
+
+/* --- Responsive Grid Layout --- */
+.grid {
+    display: grid;
+    /* This line automatically handles mobile vs desktop sizing */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* --- Modern Card Design --- */
+.card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0.5rem 0 1rem;
+    color: #f1f5f9;
+}
+
+.card p {
+    color: #94a3b8;
+    font-size: 1rem;
+    flex-grow: 1;
+}
+
+/* --- Subject-Specific Accent Colors --- */
+.card-tag {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Physics gets a neon blue accent */
+.physics-card:hover { border-color: #38bdf8; }
+.physics-card .card-tag { color: #38bdf8; }
+
+/* Chemistry gets a neon pink accent */
+.chemistry-card:hover { border-color: #f472b6; }
+.chemistry-card .card-tag { color: #f472b6; }
+
+/* Biology gets a neon green accent */
+.biology-card:hover { border-color: #4ade80; }
+.biology-card .card-tag { color: #4ade80; }
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #475569;
+    font-size: 0.875rem;
+    border-top: 1px solid #1e293b;
+  }
+
