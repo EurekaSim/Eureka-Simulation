@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg-main: #0a0f18;
+    --panel-bg: rgba(16, 24, 39, 0.7);
+    --accent-normal: #00d2ff;
+    --accent-warn: #f59e0b;
+    --accent-critical: #ef4444;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    padding: 20px 15px;
+    background: radial-gradient(circle at 50% 50%, #172133 0%, var(--bg-main) 100%);
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Responsive Dashboard Grid */
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Header */
+.header {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 15px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: clamp(20px, 4vw, 28px);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.status-badge {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid var(--accent-normal);
+    color: var(--accent-normal);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Display Panels */
+.display-panel {
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.panel-title {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    z-index: 10;
+}
+
+.svg-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Panel 1: Holographic Person --- */
+.scanner-bg {
+    background: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent);
+    background-size: 30px 30px;
+}
+
+.holo-person {
+    fill: none;
+    stroke: var(--accent-normal);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 5px var(--accent-normal));
+}
+
+.holo-head { fill: transparent; stroke-width: 4; transition: all 0.5s ease; }
+.holo-limb { stroke-width: 6; }
+.holo-torso { stroke-width: 8; }
+.holo-joint { fill: var(--bg-main); stroke-width: 2; transition: all 0.5s ease; }
+
+/* --- Panel 2: Internal Anatomy --- */
+.body-outline { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 2; }
+.kidneys { fill: rgba(255, 255, 255, 0.05); stroke: rgba(255, 255, 255, 0.15); stroke-width: 1.5; }
+.ureters { fill: none; stroke: rgba(255, 255, 255, 0.15); stroke-width: 2; stroke-dasharray: 4; animation: flowDown 2s linear infinite; }
+@keyframes flowDown { from { stroke-dashoffset: 8; } to { stroke-dashoffset: 0; } }
+
+.bladder-wall { fill: rgba(0, 0, 0, 0.5); stroke: var(--accent-normal); stroke-width: 2; transition: all 0.5s ease; }
+.liquid-wave { fill: var(--accent-normal); opacity: 0.7; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), fill 0.5s ease; }
+.wave-path { animation: waveAction 3s infinite linear; }
+@keyframes waveAction { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.overlay-metric {
+    position: absolute; font-family: 'Roboto Mono', monospace; font-size: 12px;
+    color: var(--accent-normal); pointer-events: none; transition: color 0.3s;
+}
+.metric-vol { top: 75%; left: 60%; }
+.metric-posture { bottom: 20px; left: 15px; font-weight: bold;}
+
+/* --- Panel 3: Control Panel --- */
+.control-panel { display: flex; flex-direction: column; gap: 20px; }
+.telemetry-card {
+    background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 18px;
+}
+.telemetry-title { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+.data-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; }
+.data-label { color: var(--text-muted); font-size: 12px; }
+.data-value { font-size: 20px; font-weight: 700; color: var(--text-main); transition: color 0.3s; }
+.data-unit { font-size: 11px; color: var(--text-muted); }
+
+/* Custom Range Slider - Optimized for Touch */
+.slider-container { margin-top: 15px; }
+input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 10px 0; }
+input[type=range]:focus { outline: none; }
+input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 4px; border: 1px solid var(--glass-border); }
+input[type=range]::-webkit-slider-thumb { height: 28px; width: 14px; border-radius: 4px; background: var(--text-main); cursor: pointer; -webkit-appearance: none; margin-top: -11px; box-shadow: 0 0 10px rgba(255,255,255,0.5); transition: background 0.3s; }
+
+/* ECG */
+.ecg-line { width: 100%; height: 35px; position: relative; overflow: hidden; border-bottom: 1px solid var(--glass-border); margin-top: 5px; }
+.ecg-path { position: absolute; top: 0; left: 0; width: 200%; height: 30px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="30"><path d="M0,15 L20,15 L25,5 L30,25 L35,15 L100,15" fill="none" stroke="%2300d2ff" stroke-width="1.5"/></svg>') repeat-x; animation: ecgScroll 2s linear infinite; }
+.ecg-fade { position: absolute; right: 0; top: 0; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.2) 100%); }
+@keyframes ecgScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100px); } }
+
+/* Action Button */
+.action-btn {
+    background: transparent; border: 2px solid var(--accent-critical); color: var(--accent-critical);
+    padding: 16px 20px; font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; border-radius: 8px; cursor: pointer;
+    transition: all 0.3s ease; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+    opacity: 0.3; pointer-events: none; position: relative; overflow: hidden; margin-top: auto;
+}
+.action-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.4), transparent); transition: left 0.5s; }
+.action-btn.active { opacity: 1; pointer-events: auto; background: rgba(239, 68, 68, 0.1); animation: pulseBtn 1.5s infinite; }
+.action-btn.active:hover { background: var(--accent-critical); color: white; box-shadow: 0 0 30px rgba(239, 68, 68, 0.6); }
+.action-btn.active:hover::before { left: 100%; }
+
+@keyframes pulseBtn { 0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); } 50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); } 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); } }
+
+@keyframes criticalShake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    25% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+    50% { transform: translate(-1px, 1px) rotate(0.5deg); }
+    75% { transform: translate(1px, -1px) rotate(0deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
+}
+.is-critical { animation: criticalShake 0.3s infinite; }
+
+/* =========================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* Tablets (Large) */
+@media (max-width: 1024px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+    .control-panel {
+        grid-column: 1 / -1;
+        flex-direction: row;
+    }
+    .telemetry-card { flex: 1; }
+    .action-btn { flex-basis: 100%; height: fit-content; margin-top: 0; align-self: flex-end; padding: 20px;}
+    .control-panel { flex-wrap: wrap; }
+}
+
+/* Tablets (Small) & Large Phones */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        padding: 20px 15px;
+    }
+    .display-panel {
+        height: 400px;
+    }
+    .control-panel {
+        flex-direction: column;
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .status-badge {
+        width: 100%;
+    }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+    .display-panel {
+        height: 320px;
+    }
+    .header h1 {
+        font-size: 22px;
+    }
+    .action-btn {
+        padding: 15px;
+        font-size: 16px;
+    }
+  }
+  
