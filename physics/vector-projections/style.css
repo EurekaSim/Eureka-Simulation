@@ -9,30 +9,34 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #000000;
     color: #ffffff;
-    height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevents horizontal scrolling bugs */
 }
 
-/* Top Navigation */
+/* --- Top Navigation --- */
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     background: rgba(10, 10, 10, 0.8);
     border-bottom: 1px solid #1a1a1a;
     backdrop-filter: blur(10px);
     z-index: 10;
+    /* Allows text to wrap neatly on very narrow screens */
+    flex-wrap: wrap; 
+    gap: 0.5rem;
 }
 
 .back-link {
-    color: #888;
+    color: #888888;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.2s;
+    white-space: nowrap;
 }
 
 .back-link:hover { color: #ffffff; }
@@ -42,20 +46,26 @@ body {
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: #3b82f6;
+    font-size: 0.9rem;
+    text-align: right;
 }
 
-/* Layout */
+/* --- Mobile-First Layout (Default) --- */
 .sim-container {
     display: flex;
+    flex-direction: column; /* Forces vertical stacking on mobile */
     flex: 1;
-    height: calc(100vh - 60px);
+    width: 100%;
 }
 
 .canvas-wrapper {
-    flex: 1;
+    width: 100%;
+    /* Locks the canvas to take up the top portion of the phone screen */
+    height: 45vh; 
+    min-height: 280px;
     position: relative;
     background: radial-gradient(circle at center, #0a101f 0%, #000000 100%);
-    min-height: 0; /* Prevents flexbox overflow issues */
+    border-bottom: 1px solid #1a1a1a;
 }
 
 canvas {
@@ -64,23 +74,21 @@ canvas {
     display: block;
 }
 
-/* Control Panel */
 .control-panel {
-    width: 350px;
+    width: 100%;
     background: #050505;
-    border-left: 1px solid #1a1a1a;
-    padding: 2rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    overflow-y: auto;
 }
 
+/* --- UI Elements --- */
 h3 {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #666;
+    color: #666666;
     border-bottom: 1px solid #1a1a1a;
     padding-bottom: 0.5rem;
 }
@@ -115,11 +123,11 @@ input[type=range]::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    height: 22px; /* Slightly larger for easier mobile tapping */
+    width: 22px;
     border-radius: 50%;
     background: #ffffff;
-    margin-top: -8px;
+    margin-top: -9px;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
@@ -144,13 +152,13 @@ input[type=range]::-webkit-slider-thumb {
 
 .readout-item span:first-child {
     font-size: 0.8rem;
-    color: #888;
+    color: #888888;
 }
 
 .formula {
     font-family: monospace;
     font-size: 0.9rem;
-    color: #ccc;
+    color: #cccccc;
 }
 
 .value {
@@ -159,47 +167,36 @@ input[type=range]::-webkit-slider-thumb {
     text-align: right;
 }
 
-.x-val { color: #3b82f6; } /* Blue for X (Cosine) */
-.y-val { color: #f59e0b; } /* Yellowish-Orange for Y (Sine) */
+.x-val { color: #3b82f6; } 
+.y-val { color: #f59e0b; } 
 
-/* --- Mobile Responsiveness --- */
-@media (max-width: 768px) {
+/* --- Desktop Layout Overrides --- */
+@media (min-width: 800px) {
     body {
-        /* Allow standard scrolling on mobile */
-        height: auto; 
-        overflow-y: auto;
+        height: 100vh;
+        overflow: hidden; /* Locks scrolling on desktop */
     }
     
-    .top-bar {
-        padding: 1rem;
-    }
-
     .sim-container {
-        flex-direction: column;
-        height: auto;
+        flex-direction: row; /* Switches to side-by-side */
+        height: calc(100vh - 70px);
     }
 
     .canvas-wrapper {
-        /* Fix the canvas height so it doesn't collapse on phones */
-        height: 50vh; 
-        min-height: 350px;
-        width: 100%;
+        flex: 1; /* Takes up all remaining width */
+        height: 100%;
+        border-bottom: none;
     }
 
     .control-panel {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid #1a1a1a;
-        padding: 1.5rem;
-        /* Ensure it takes up remaining space without internal scrolling */
-        overflow-y: visible; 
+        width: 380px; /* Locks panel width */
+        height: 100%;
+        border-left: 1px solid #1a1a1a;
+        overflow-y: auto;
+        padding: 2.5rem 2rem;
     }
 
-    .readout-panel {
-        margin-top: 1rem;
-    }
-    
     .sim-title {
-        font-size: 0.85rem;
+        font-size: 1rem;
     }
 }
