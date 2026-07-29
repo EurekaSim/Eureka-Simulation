@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -23,6 +24,7 @@ body {
     background: rgba(10, 10, 10, 0.8);
     border-bottom: 1px solid #1a1a1a;
     backdrop-filter: blur(10px);
+    z-index: 10;
 }
 
 .back-link {
@@ -53,6 +55,7 @@ body {
     flex: 1;
     position: relative;
     background: radial-gradient(circle at center, #0a101f 0%, #000000 100%);
+    min-height: 0; /* Prevents flexbox overflow issues */
 }
 
 canvas {
@@ -70,6 +73,7 @@ canvas {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    overflow-y: auto;
 }
 
 h3 {
@@ -99,6 +103,7 @@ input[type=range] {
     -webkit-appearance: none;
     width: 100%;
     background: transparent;
+    padding: 10px 0;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
@@ -110,11 +115,11 @@ input[type=range]::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 16px;
-    width: 16px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     background: #ffffff;
-    margin-top: -6px;
+    margin-top: -8px;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
@@ -156,4 +161,45 @@ input[type=range]::-webkit-slider-thumb {
 
 .x-val { color: #3b82f6; } /* Blue for X (Cosine) */
 .y-val { color: #f59e0b; } /* Yellowish-Orange for Y (Sine) */
-  
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    body {
+        /* Allow standard scrolling on mobile */
+        height: auto; 
+        overflow-y: auto;
+    }
+    
+    .top-bar {
+        padding: 1rem;
+    }
+
+    .sim-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .canvas-wrapper {
+        /* Fix the canvas height so it doesn't collapse on phones */
+        height: 50vh; 
+        min-height: 350px;
+        width: 100%;
+    }
+
+    .control-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #1a1a1a;
+        padding: 1.5rem;
+        /* Ensure it takes up remaining space without internal scrolling */
+        overflow-y: visible; 
+    }
+
+    .readout-panel {
+        margin-top: 1rem;
+    }
+    
+    .sim-title {
+        font-size: 0.85rem;
+    }
+}
