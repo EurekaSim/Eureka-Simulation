@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- THIS LINE IS THE FIX: It forces the phone to use mobile dimensions -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vector Projections - Eureka</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -14,7 +15,7 @@
     </nav>
 
     <div class="sim-container">
-        <!-- Canvas for rendering the interactive vector -->
+        <!-- Canvas Wrapper -->
         <div class="canvas-wrapper">
             <canvas id="vectorCanvas"></canvas>
         </div>
@@ -24,7 +25,7 @@
             <h3>Parameters</h3>
             
             <div class="control-group">
-                <label for="magnitudeSlider">Magnitude (V): <span id="magValue">100</span></label>
+                <label for="magnitudeSlider">Magnitude (V): <span id="magValue">150</span></label>
                 <input type="range" id="magnitudeSlider" min="10" max="250" value="150">
             </div>
 
@@ -38,16 +39,17 @@
                 <div class="readout-item">
                     <span>X-Axis Component</span>
                     <span class="formula">V_x = V · cos(θ)</span>
-                    <span class="value x-val" id="xReadout">0.00</span>
+                    <span class="value x-val" id="xReadout">129.90</span>
                 </div>
                 <div class="readout-item">
                     <span>Y-Axis Component</span>
                     <span class="formula">V_y = V · sin(θ)</span>
-                    <span class="value y-val" id="yReadout">0.00</span>
+                    <span class="value y-val" id="yReadout">75.00</span>
                 </div>
             </div>
         </div>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
