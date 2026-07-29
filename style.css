@@ -233,3 +233,41 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .eu-card { transition: none; }
 }
+
+/* ===================== SITE NAVIGATION ===================== */
+.eureka-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0b0e11; /* Adjust to match your dark theme */
+  border-bottom: 1px solid #232830;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.eureka-brand {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.eureka-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.eureka-nav .nav-link {
+  color: #6F7684;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.eureka-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.eureka-nav .nav-link.active {
+  color: #E8584A; /* Matches the theme accent color */
+  font-weight: 500;
+   }
