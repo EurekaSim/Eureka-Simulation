@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Biometric Micturition Simulator (Responsive)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg-main: #0a0f18;
+            --panel-bg: rgba(16, 24, 39, 0.7);
+            --accent-normal: #00d2ff;
+            --accent-warn: #f59e0b;
+            --accent-critical: #ef4444;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px 15px; /* Added padding for mobile scrolling */
+            background: radial-gradient(circle at 50% 50%, #172133 0%, var(--bg-main) 100%);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Responsive Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+            background: var(--panel-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 15px;
+            margin-bottom: 5px;
+            flex-wrap: wrap; /* Allows stacking on very small screens */
+            gap: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: clamp(20px, 4vw, 28px); /* Responsive font size */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-badge {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 13px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-normal);
+            color: var(--accent-normal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        /* Display Panels */
+        .display-panel {
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px; /* Base height */
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .panel-title {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            z-index: 10;
+        }
+
+        .svg-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Panel 1: Holographic Person --- */
+        .scanner-bg {
+            background: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent);
+            background-size: 30px 30px;
+        }
+
+        .holo-person {
+            fill: none;
+            stroke: var(--accent-normal);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 5px var(--accent-normal));
+        }
+        
+        .holo-head { fill: transparent; stroke-width: 4; transition: all 0.5s ease; }
+        .holo-limb { stroke-width: 6; }
+        .holo-torso { stroke-width: 8; }
+        .holo-joint { fill: var(--bg-main); stroke-width: 2; transition: all 0.5s ease; }
+
+        /* --- Panel 2: Internal Anatomy --- */
+        .body-outline { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 2; }
+        .kidneys { fill: rgba(255, 255, 255, 0.05); stroke: rgba(255, 255, 255, 0.15); stroke-width: 1.5; }
+        .ureters { fill: none; stroke: rgba(255, 255, 255, 0.15); stroke-width: 2; stroke-dasharray: 4; animation: flowDown 2s linear infinite; }
+        @keyframes flowDown { from { stroke-dashoffset: 8; } to { stroke-dashoffset: 0; } }
+
+        .bladder-wall { fill: rgba(0, 0, 0, 0.5); stroke: var(--accent-normal); stroke-width: 2; transition: all 0.5s ease; }
+        .liquid-wave { fill: var(--accent-normal); opacity: 0.7; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), fill 0.5s ease; }
+        .wave-path { animation: waveAction 3s infinite linear; }
+        @keyframes waveAction { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .overlay-metric {
+            position: absolute; font-family: 'Roboto Mono', monospace; font-size: 12px;
+            color: var(--accent-normal); pointer-events: none; transition: color 0.3s;
+        }
+        .metric-vol { top: 75%; left: 60%; }
+        .metric-posture { bottom: 20px; left: 15px; font-weight: bold;}
+
+        /* --- Panel 3: Control Panel --- */
+        .control-panel { display: flex; flex-direction: column; gap: 20px; }
+        .telemetry-card {
+            background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 18px;
+        }
+        .telemetry-title { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+        .data-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; }
+        .data-label { color: var(--text-muted); font-size: 12px; }
+        .data-value { font-size: 20px; font-weight: 700; color: var(--text-main); transition: color 0.3s; }
+        .data-unit { font-size: 11px; color: var(--text-muted); }
+
+        /* Custom Range Slider - Optimized for Touch */
+        .slider-container { margin-top: 15px; }
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 10px 0; }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 4px; border: 1px solid var(--glass-border); }
+        input[type=range]::-webkit-slider-thumb { height: 28px; width: 14px; border-radius: 4px; background: var(--text-main); cursor: pointer; -webkit-appearance: none; margin-top: -11px; box-shadow: 0 0 10px rgba(255,255,255,0.5); transition: background 0.3s; }
+
+        /* ECG */
+        .ecg-line { width: 100%; height: 35px; position: relative; overflow: hidden; border-bottom: 1px solid var(--glass-border); margin-top: 5px; }
+        .ecg-path { position: absolute; top: 0; left: 0; width: 200%; height: 30px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="30"><path d="M0,15 L20,15 L25,5 L30,25 L35,15 L100,15" fill="none" stroke="%2300d2ff" stroke-width="1.5"/></svg>') repeat-x; animation: ecgScroll 2s linear infinite; }
+        .ecg-fade { position: absolute; right: 0; top: 0; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.2) 100%); }
+        @keyframes ecgScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100px); } }
+
+        /* Action Button */
+        .action-btn {
+            background: transparent; border: 2px solid var(--accent-critical); color: var(--accent-critical);
+            padding: 16px 20px; font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; border-radius: 8px; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+            opacity: 0.3; pointer-events: none; position: relative; overflow: hidden; margin-top: auto;
+        }
+        .action-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.4), transparent); transition: left 0.5s; }
+        .action-btn.active { opacity: 1; pointer-events: auto; background: rgba(239, 68, 68, 0.1); animation: pulseBtn 1.5s infinite; }
+        .action-btn.active:hover { background: var(--accent-critical); color: white; box-shadow: 0 0 30px rgba(239, 68, 68, 0.6); }
+        .action-btn.active:hover::before { left: 100%; }
+
+        @keyframes pulseBtn { 0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); } 50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); } 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); } }
+
+        @keyframes criticalShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            25% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+            50% { transform: translate(-1px, 1px) rotate(0.5deg); }
+            75% { transform: translate(1px, -1px) rotate(0deg); }
+            100% { transform: translate(1px, 1px) rotate(0deg); }
+        }
+        .is-critical { animation: criticalShake 0.3s infinite; }
+
+        /* =========================================
+           RESPONSIVE MEDIA QUERIES
+           ========================================= */
+        
+        /* Tablets (Large) */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr 1fr; /* 2 Columns */
+            }
+            .control-panel {
+                grid-column: 1 / -1; /* Span full width below graphics */
+                flex-direction: row; /* Layout cards side-by-side */
+            }
+            .telemetry-card { flex: 1; }
+            .action-btn { flex-basis: 100%; height: fit-content; margin-top: 0; align-self: flex-end; padding: 20px;}
+            .control-panel { flex-wrap: wrap; }
+        }
+
+        /* Tablets (Small) & Large Phones */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr; /* 1 Column */
+                padding: 20px 15px;
+            }
+            .display-panel {
+                height: 400px; /* Reduce graphic heights for mobile */
+            }
+            .control-panel {
+                flex-direction: column; /* Stack controls vertically again */
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .status-badge {
+                width: 100%;
+            }
+        }
+
+        /* Small Phones */
+        @media (max-width: 480px) {
+            .display-panel {
+                height: 320px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .action-btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <!-- Header -->
+    <div class="header">
+        <h1>Micturition Simulator</h1>
+        <div class="status-badge" id="sysStatus">System Normal</div>
+    </div>
+
+    <!-- Panel 1: Holographic Biomechanics -->
+    <div class="display-panel scanner-bg">
+        <div class="panel-title">Biomechanical Posture</div>
+        <div class="overlay-metric metric-posture" id="postureText">STANCE: RELAXED</div>
+        <div class="svg-container" id="personSimulator">
+            <!-- Coordinates are relative (viewBox), scales perfectly on mobile -->
+            <svg viewBox="0 0 200 450" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+                <g class="holo-person">
+                    <circle id="pHead" class="holo-head" cx="100" cy="70" r="22" />
+                    <path id="pTorso" class="holo-torso" d="M 100 92 Q 100 170 100 240" />
+                    <path id="pArmL" class="holo-limb" d="M 100 110 Q 60 170 60 250" />
+                    <path id="pArmR" class="holo-limb" d="M 100 110 Q 140 170 140 250" />
+                    <path id="pLegL" class="holo-limb" d="M 100 240 Q 80 340 80 430" />
+                    <path id="pLegR" class="holo-limb" d="M 100 240 Q 120 340 120 430" />
+                    <circle id="jShL" class="holo-joint" cx="80" cy="115" r="4" />
+                    <circle id="jShR" class="holo-joint" cx="120" cy="115" r="4" />
+                    <circle id="jPelvis" class="holo-joint" cx="100" cy="240" r="6" />
+                    <circle id="jHndL" class="holo-joint" cx="60" cy="250" r="4" />
+                    <circle id="jHndR" class="holo-joint" cx="140" cy="250" r="4" />
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Panel 2: Interactive Anatomy Panel -->
+    <div class="display-panel">
+        <div class="panel-title">Internal Sonography</div>
+        <div class="overlay-metric metric-vol" id="overlayVol">0 mL</div>
+        
+        <div class="svg-container">
+            <svg viewBox="0 0 400 520" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+                <path class="body-outline" d="M 120 70 C 130 110 140 170 140 240 C 140 310 130 370 120 420 L 100 520 M 280 70 C 270 110 260 170 260 240 C 260 310 270 370 280 420 L 300 520" />
+                <path class="kidneys" d="M 160 200 C 145 200 140 215 140 230 C 140 250 155 260 165 260 C 175 260 180 240 180 220 C 180 210 170 200 160 200 Z" />
+                <path class="kidneys" d="M 240 200 C 255 200 260 215 260 230 C 260 250 245 260 235 260 C 225 260 220 240 220 220 C 220 210 230 200 240 200 Z" />
+                <path class="ureters" d="M 165 240 Q 170 300 185 340" />
+                <path class="ureters" d="M 235 240 Q 230 300 215 340" />
+
+                <defs>
+                    <path id="bladderShape" d="M 200 330 C 230 330 245 360 245 390 C 245 415 220 430 200 440 C 180 430 155 415 155 390 C 155 360 170 330 200 330 Z" />
+                    <clipPath id="bladderClip"><use href="#bladderShape" /></clipPath>
+                </defs>
+
+                <path d="M 195 440 L 195 470 M 205 440 L 205 470" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3" />
+                <rect id="sphincter" x="190" y="455" width="20" height="6" fill="#00d2ff" rx="2"/>
+
+                <use href="#bladderShape" class="bladder-wall" id="bladderWall" />
+                <g clip-path="url(#bladderClip)">
+                    <g id="liquidGroup" class="liquid-wave" transform="translate(0, 110)">
+                        <path class="wave-path" d="M 100 330 Q 150 310 200 330 T 300 330 T 400 330 L 400 470 L 100 470 Z" />
+                    </g>
+                </g>
+                <use href="#bladderShape" fill="none" stroke="inherit" stroke-width="2" class="bladder-wall" id="bladderOutline" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Panel 3: Control Panel -->
+    <div class="control-panel">
+        <div class="telemetry-card">
+            <div class="telemetry-title">Detrusor Volume Control</div>
+            <div class="data-row">
+                <span class="data-label">Bladder Volume</span>
+                <div><span class="data-value" id="valVol">0</span> <span class="data-unit">mL</span></div>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Intravesical Pressure</span>
+                <div><span class="data-value" id="valPres">5</span> <span class="data-unit">cmH₂O</span></div>
+            </div>
+            <div class="slider-container">
+                <input type="range" id="fillSlider" min="0" max="600" value="0">
+            </div>
+        </div>
+
+        <div class="telemetry-card">
+            <div class="telemetry-title">Nervous System Response</div>
+            <div class="data-row">
+                <span class="data-label">Sensory Urge</span>
+                <span class="data-value" id="valUrge">None</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Sphincter Tone</span>
+                <span class="data-value" id="valSphincter">Resting</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Heart Rate</span>
+                <div><span class="data-value" id="valHR">72</span> <span class="data-unit">BPM</span></div>
+            </div>
+            <div class="ecg-line">
+                <div class="ecg-path" id="ecgPath"></div>
+                <div class="ecg-fade"></div>
+            </div>
+        </div>
+
+        <button class="action-btn" id="voidBtn">Initiate Micturition (Void)</button>
+    </div>
+</div>
+
+<script>
+    // System Elements
+    const slider = document.getElementById('fillSlider');
+    const liquidGroup = document.getElementById('liquidGroup');
+    const sphincter = document.getElementById('sphincter');
+    const voidBtn = document.getElementById('voidBtn');
+    
+    // Telemetry Elements
+    const valVol = document.getElementById('valVol'), valPres = document.getElementById('valPres');
+    const valUrge = document.getElementById('valUrge'), valSphincter = document.getElementById('valSphincter');
+    const valHR = document.getElementById('valHR'), sysStatus = document.getElementById('sysStatus');
+    const overlayVol = document.getElementById('overlayVol'), postureText = document.getElementById('postureText');
+    const ecgPath = document.getElementById('ecgPath'), personSimulator = document.getElementById('personSimulator');
+
+    // Holographic Person Elements
+    const pHead = document.getElementById('pHead'), pTorso = document.getElementById('pTorso');
+    const pArmL = document.getElementById('pArmL'), pArmR = document.getElementById('pArmR');
+    const pLegL = document.getElementById('pLegL'), pLegR = document.getElementById('pLegR');
+    const jHndL = document.getElementById('jHndL'), jHndR = document.getElementById('jHndR');
+
+    // Constants
+    const MAX_VOL = 600;
+    const BLADDER_BTM_Y = 110;
+
+    function calculatePressure(vol) {
+        if(vol < 150) return 5 + (vol / 50); 
+        if(vol < 400) return 8 + ((vol - 150) / 30); 
+        return 16 + Math.pow((vol - 400) / 30, 2);
+    }
+
+    // Morph the holographic person based on state
+    function updatePosture(state) {
+        if(state === 1) { // Relaxed
+            pHead.setAttribute('cx', '100'); pHead.setAttribute('cy', '70');
+            pTorso.setAttribute('d', 'M 100 92 Q 100 170 100 240');
+            pArmL.setAttribute('d', 'M 100 110 Q 60 170 60 250');
+            pArmR.setAttribute('d', 'M 100 110 Q 140 170 140 250');
+            pLegL.setAttribute('d', 'M 100 240 Q 80 340 80 430');
+            pLegR.setAttribute('d', 'M 100 240 Q 120 340 120 430');
+            jHndL.setAttribute('cx', '60'); jHndL.setAttribute('cy', '250');
+            jHndR.setAttribute('cx', '140'); jHndR.setAttribute('cy', '250');
+ 
