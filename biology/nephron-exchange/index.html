@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nephron Exchange - Eureka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-bar">
+        <a href="../../index.html" class="back-link">← Back to Eureka</a>
+        <div class="sim-title">Nephron Exchange</div>
+    </nav>
+
+    <div class="sim-container">
+        <!-- Live Nephron & Vasa Recta Canvas -->
+        <div class="canvas-wrapper">
+            <canvas id="nephronCanvas"></canvas>
+        </div>
+
+        <!-- Interactive Control Panel -->
+        <div class="control-panel">
+            <h3>Systemic Conditions</h3>
+            
+            <div class="control-group">
+                <label for="hydrationSlider">Hydration Level: <span id="hydrationValue">Normal</span></label>
+                <input type="range" id="hydrationSlider" min="0" max="100" value="50">
+            </div>
+
+            <div class="control-group">
+                <label for="sodiumSlider">Blood Sodium (Na+): <span id="sodiumValue">140 mEq/L</span></label>
+                <input type="range" id="sodiumSlider" min="120" max="160" value="140">
+            </div>
+
+            <div class="readout-panel">
+                <h3>Physiological Response</h3>
+                <div class="quantum-grid">
+                    <div class="q-box">
+                        <span class="q-label">ADH Release</span>
+                        <span class="q-val" id="adhLevel">Moderate</span>
+                    </div>
+                    <div class="q-box">
+                        <span class="q-label">H₂O Permeability</span>
+                        <span class="q-val" id="permeability">50%</span>
+                    </div>
+                    <div class="q-box">
+                        <span class="q-label">Urine Osmolarity</span>
+                        <span class="q-val" id="osmolarity">600 mOsm</span>
+                    </div>
+                    <div class="q-box">
+                        <span class="q-label">Urine Volume</span>
+                        <span class="q-val" id="urineVol">Normal</span>
+                    </div>
+                </div>
+
+                <div class="readout-item config-item">
+                    <span>Urine Output & Concentration</span>
+                    <div class="urine-display">
+                        <div id="urineColorBox" class="color-box"></div>
+                        <span class="value bio-val" id="urineState">Standard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
