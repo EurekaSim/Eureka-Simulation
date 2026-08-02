@@ -10,59 +10,84 @@
 <body>
     <nav class="top-bar">
         <a href="../../index.html" class="back-link">← Back to Eureka</a>
-        <div class="sim-title">Nephron Exchange</div>
+        <div class="sim-title">Nephron Exchange & Vasa Recta</div>
     </nav>
 
-    <div class="sim-container">
-        <!-- Live Nephron & Vasa Recta Canvas -->
-        <div class="canvas-wrapper">
-            <canvas id="nephronCanvas"></canvas>
-        </div>
-
-        <!-- Interactive Control Panel -->
-        <div class="control-panel">
-            <h3>Systemic Conditions</h3>
+    <div class="dashboard">
+        <!-- Left Panel: Interactive Systemic Inputs -->
+        <aside class="panel input-panel">
+            <div class="panel-header">
+                <h2>Systemic Variables</h2>
+            </div>
             
             <div class="control-group">
-                <label for="hydrationSlider">Hydration Level: <span id="hydrationValue">Normal</span></label>
-                <input type="range" id="hydrationSlider" min="0" max="100" value="50">
+                <label for="hydrationSlider">
+                    <span>Hydration State</span>
+                    <span id="hydrationValue" class="highlight-blue">Normal</span>
+                </label>
+                <input type="range" id="hydrationSlider" class="slider-blue" min="0" max="100" value="50">
+                <p class="helper-text">Modulates blood volume and systemic osmolarity.</p>
             </div>
 
             <div class="control-group">
-                <label for="sodiumSlider">Blood Sodium (Na+): <span id="sodiumValue">140 mEq/L</span></label>
-                <input type="range" id="sodiumSlider" min="120" max="160" value="140">
+                <label for="sodiumSlider">
+                    <span>Blood Sodium (Na⁺)</span>
+                    <span id="sodiumValue" class="highlight-orange">140 mEq/L</span>
+                </label>
+                <input type="range" id="sodiumSlider" class="slider-orange" min="120" max="160" value="140">
+                <p class="helper-text">Affects countercurrent multiplication gradients.</p>
+            </div>
+        </aside>
+
+        <!-- Center Panel: Live Anatomical Rendering -->
+        <main class="canvas-container">
+            <div class="canvas-header">
+                <h3>Live Exchange Mechanics</h3>
+                <span class="live-indicator">● Active Simulation</span>
+            </div>
+            <canvas id="nephronCanvas"></canvas>
+        </main>
+
+        <!-- Right Panel: Outputs & Compiled Notes -->
+        <aside class="panel output-panel">
+            <div class="panel-header">
+                <h2>Physiological Output</h2>
             </div>
 
-            <div class="readout-panel">
-                <h3>Physiological Response</h3>
-                <div class="quantum-grid">
-                    <div class="q-box">
-                        <span class="q-label">ADH Release</span>
-                        <span class="q-val" id="adhLevel">Moderate</span>
-                    </div>
-                    <div class="q-box">
-                        <span class="q-label">H₂O Permeability</span>
-                        <span class="q-val" id="permeability">50%</span>
-                    </div>
-                    <div class="q-box">
-                        <span class="q-label">Urine Osmolarity</span>
-                        <span class="q-val" id="osmolarity">600 mOsm</span>
-                    </div>
-                    <div class="q-box">
-                        <span class="q-label">Urine Volume</span>
-                        <span class="q-val" id="urineVol">Normal</span>
-                    </div>
+            <div class="data-grid">
+                <div class="data-box">
+                    <span class="data-label">ADH Secretion</span>
+                    <span class="data-value" id="adhLevel">Moderate</span>
                 </div>
-
-                <div class="readout-item config-item">
-                    <span>Urine Output & Concentration</span>
-                    <div class="urine-display">
-                        <div id="urineColorBox" class="color-box"></div>
-                        <span class="value bio-val" id="urineState">Standard</span>
-                    </div>
+                <div class="data-box">
+                    <span class="data-label">H₂O Permeability</span>
+                    <span class="data-value highlight-blue" id="permeability">50%</span>
+                </div>
+                <div class="data-box">
+                    <span class="data-label">Urine Osmolarity</span>
+                    <span class="data-value highlight-orange" id="osmolarity">600 mOsm</span>
+                </div>
+                <div class="data-box">
+                    <span class="data-label">Urine Volume</span>
+                    <span class="data-value" id="urineVol">Normal</span>
                 </div>
             </div>
-        </div>
+
+            <div class="urine-analysis">
+                <span class="data-label">Final Urine Composition</span>
+                <div class="urine-display">
+                    <div id="urineColorBox" class="color-box"></div>
+                    <span class="urine-state" id="urineState">Standard</span>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <span class="data-label">Conceptual Summary</span>
+                <p id="conceptSummary" class="summary-text">
+                    Under normal systemic conditions, moderate ADH levels permit standard water reabsorption. The countercurrent mechanism maintains an equilibrium, resulting in isotonic urine output.
+                </p>
+            </div>
+        </aside>
     </div>
     
     <script src="script.js"></script>
